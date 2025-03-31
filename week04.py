@@ -4,6 +4,14 @@ class Node:
         self.link = link
 
 class LinkedList:
+    def __str__(self):
+        node = self.head
+        out_texts = ""
+        while node is not None:
+            #print(f"{node.data} ->",end="")
+            out_texts = out_texts + str(node.data) + "-> "
+            node = node.link
+        return out_texts
     def __init__(self):
         self.head = None
 
