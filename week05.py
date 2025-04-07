@@ -1,13 +1,17 @@
-s1 = list()
-print(len(s1))
-s1.append("Data structure") # push
-s1.append("DataBase")
-print(len(s1)) #size
-print(s1)
-print(s1[-1]) #peek
-print(s1.pop())
-print(s1)
-print(s1.pop())
-print(s1)
-print(s1.pop())
-print(s1)
+def check_parentheses(expression:str) -> bool:
+    stack = []
+
+    for letter in expression:
+        if letter == "(":
+            stack.append(letter)
+        if letter == ")":
+            if len(stack) == 0:
+                return False
+            else:
+                stack.pop()
+    return len(stack) == 0
+
+print(check_parentheses("("))
+print(check_parentheses("( )"))
+print(check_parentheses("( ) )"))
+print(check_parentheses(")"))
