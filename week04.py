@@ -1,5 +1,4 @@
 import random
-from os import remove
 
 
 class Node:
@@ -35,7 +34,7 @@ class LinkedList:
 
     def search(self, target):
         current = self.head
-        while current.link:
+        while current:
             if current.data == target:
                 return f"{target}을(를) 찾았습니다."
             else:
@@ -44,16 +43,19 @@ class LinkedList:
 
 
     def remove(self, target):
+        current = self.head
         if self.head.data == target:
             self.head = self.head.link
+            current.link = None
             return
-        current = self.head
         previous = None
         while current:
             if current.data == target:
                 previous.link = current.link
+                current.link = None
+                break
             previous = current
-            current = current.next
+            current = current.link
 
 
 ll = LinkedList()
@@ -63,5 +65,5 @@ ll.append(-9)
 print(ll)
 print(ll.search(-9))
 print(ll.search(100))
-ll.remove(8)
+ll.remove(-9)
 print(ll)
