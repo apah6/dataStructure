@@ -78,8 +78,13 @@ if __name__ == "__main__":
     print()
     pre_order(root)  # 10->8->3->9->15
     print()
+
     find_number = int(input("찾고자 하는 값 : "))
-    print(search(find_number))
+    if search(find_number):
+        print(f"{find_number}을(를) 찾았습니다.")
+    else:
+        print(f"{find_number}가(이) 존재하지 않습니다.")
+
 
 
 
