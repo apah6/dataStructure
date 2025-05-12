@@ -78,6 +78,12 @@ def delete(node, value):
             return node.right
         elif node.right is None:
             return node.left
+        #자식이 2개인경우
+        min_larger_node = node.right
+        while min_larger_node.left:
+            min_larger_node = min_larger_node.left #move
+            node.data = min_larger_node.data
+            node.right = delete(node.right, min_larger_node.data)
     return node
 
 if __name__ == "__main__":
@@ -88,11 +94,11 @@ if __name__ == "__main__":
         root = insert(root, number)
 
     print("BST 구성 완료")
-    post_order(root)  # 3->9->8->15->10
+    post_order(root)  # 3->9->8->14->15->10
     print()
-    in_order(root)  # 3->8->9->10->15
+    in_order(root)  # 3->8->9->10->14->15
     print()
-    pre_order(root)  # 10->8->3->9->15
+    pre_order(root)  # 10->8->3->9->15->14
     print()
 
     find_number = int(input("찾고자 하는 값 : "))
