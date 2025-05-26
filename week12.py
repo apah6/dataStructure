@@ -1,39 +1,34 @@
-from collections import deque
+#13주차에 수정 예정
+v, e = map(int, input().split()) # 정점,간선 갯수
+edges = list()
 
-graph = [
-    [0, 1, 1, 0, 0, 0, 0, 0],
-    [1, 0, 0, 1, 0, 0, 0, 0],
-    [1, 0, 0, 1, 0, 0, 0, 0],
-    [0, 1, 1, 0, 1, 1, 1, 0],
-    [0, 0, 0, 1, 0, 1, 0, 0],
-    [0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 1, 0]
-]
+for _ in range(e):
+    a, b, cost = map(int, input().split())
+    edges.append((cost, a, b))
 
-#깊이 우선 탐색
-def dfs(g, i, visited):
-    visited[i] = 1
-    print(chr(ord('A')+i), end =' ') #방문 노드 출력
-    for j in range(len(g)):
-        if g[i][j] == 1 and not visited[j]:
-            dfs(g, j, visited)
+def is_connected(te, v) -> bool:
+    if not edges:
+        return v <= 1
 
-#너비 우선 탐색
-def bfs(g, i, visited):
-    queue = deque([i]) # popleft,left append
-    visited[i] = True
-    while queue:
-        i = queue.popleft()
-        print(chr(ord('A') + i), end=' ')
-        for j in range(len(g)):
-            if g[i][j] == 1 and not visited[j]:
-                queue.append(j)
-                visited[j] = True
+    graph = [[] for _ in range(v+1)]
+    #vertieces = 
 
-visited_dfs = [0 for _ in range(len(graph))]
-visited_bfs = [False for _ in range(len(graph))]
+print(edges)
+edges.sort(reverse=True)
+print(edges)
 
-dfs(graph, 6, visited_dfs)
-print("\n---------------")
-bfs(graph, 1, visited_bfs) #GDHBCEFA
+selected_edges = edges[:]
+total_cost =  sum(cost for cost, a, b in edges)
+
+for cost, a, b in edges:
+    temp_edges = [(c, x, y) for c, x, y in selected_edges if not (c==cost and x==a and y==b)]
+    if is_connected(temp_edges, v):
+        selected_edges = temp_edges
+        total_cost -= cost
+        print(f"간선 ({a}----{b}, 가중치 : {cost}), 현시점 총가중치 : {total_cost}")
+    else:
+        print(f"간선 ({a}----{b}, 가중치 : {cost}), 유지(제거하면 연결 끊어짐)")
+
+print(f"\n최소 신장 트리의 총 가중치 : {total_cost}")
+for cost, a, b in sorted(selected_edges):
+    print(f"{a}----{b}, {cost}")
