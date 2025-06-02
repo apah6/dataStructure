@@ -14,35 +14,19 @@ def print_graph(g) :
 		print()
 	print()
 
+
+def dfs(g, current, visited):
+	visited.append(current)
+	for vertex in range(graph_size):
+		if g.graph[current][vertex] > 0 and vertex not in visited:
+			dfs(g, vertex, visited)
+
+
 def find_vertex(g, find_vtx) :
-	stack = list()
 	visited_ary = list()
-
-	current = 0	# 시작 정점
-	stack.append(current)
-	visited_ary.append(current)
-
-	while stack:
-		next = None
-		for vertex in range(graph_size):
-			if g.graph[current][vertex] != 0:  # 연결되어 있으면
-				if vertex in visited_ary:	# 방문한 적이 있는 정점
-					pass
-				else :			# 방문한 적이 없으면
-					next = vertex  #  다음 정점으로 지정
-					break
-
-		if next is not None:				# 다음에 방문할 정점이 있는 경우
-			current = next
-			stack.append(current)  # push
-			visited_ary.append(current)  # push
-		else :					# 다음에 방문할 정점이 없는 경우
-			current = stack.pop()
-
-	if find_vtx in visited_ary:
-		return True
-	else :
-		return False
+	start = 0
+	dfs(g, start, visited_ary)
+	return find_vtx in visited_ary #True || False return
 
 
 g1 = None
@@ -56,8 +40,8 @@ g1.graph[incheon][seoul] = 10; g1.graph[incheon][gangneung] = 15
 g1.graph[seoul][incheon] = 10; g1.graph[seoul][gangneung] = 40; g1.graph[seoul][daejeon] = 11; g1.graph[seoul][gwangju] = 55
 g1.graph[gangneung][incheon] = 15; g1.graph[gangneung][seoul] = 40; g1.graph[gangneung][daejeon] = 12
 g1.graph[daejeon][seoul] = 11; g1.graph[daejeon][gangneung] = 12; g1.graph[daejeon][gwangju] = 20; g1.graph[daejeon][busan] = 30
-g1.graph[gwangju][seoul] = 55; g1.graph[gwangju][daejeon] = 20; g1.graph[gwangju][busan] = 25
-g1.graph[busan][daejeon] = 30; g1.graph[busan][gwangju] = 25
+g1.graph[gwangju][seoul] = 55; g1.graph[gwangju][daejeon] = 20; g1.graph[gwangju][busan] = 28
+g1.graph[busan][daejeon] = 30; g1.graph[busan][gwangju] = 28
 
 print('도시 간 도로 건설을 위한 전체 연결도')
 print_graph(g1)
